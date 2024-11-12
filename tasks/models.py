@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db import models
 
 NULLABLE = {'blank': True, 'null': True}
@@ -30,6 +32,17 @@ class Task(models.Model):
         default=0,
         verbose_name='Просмотры',
         help_text='Счетчик просмотров задачи'
+    )
+    is_public = models.BooleanField(
+        default=False,
+        verbose_name='Флаг публичной/приватной задачи',
+        help_text='Укажите, будет ли задача публичной'
+    )
+    presumable_completion_time = models.DurationField(
+        default=timedelta(hours=5),
+        verbose_name='Предполагаемое время выполнения',
+        help_text='Укажите предполагаемое время выполнения задачи',
+        **NULLABLE
     )
 
     class Meta:

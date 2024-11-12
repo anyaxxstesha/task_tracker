@@ -8,7 +8,7 @@
             <div class="col">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <p class="card-text"><strong>{{ task.title }}</strong></p>
+                        <p class="card-text"><strong>{{ task.title }} - {{ task.presumable_completion_time }}</strong></p>
                         <p class="card-text">{{ task.description }}</p>
                         <img style="height: 20rem;" src="{{ task.image | media_filter }}">
                         <p class="card-text">{{ task.file }}</p>
