@@ -41,6 +41,12 @@ class User(AbstractUser):
         help_text='Загрузите аватар',
         **NULLABLE
     )
+    token = models.CharField(
+        max_length=100,
+        verbose_name='Токен',
+        blank=True, null=True,
+        help_text='Токен для входа в систему'
+    )
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
