@@ -2,14 +2,15 @@ import secrets
 
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import CreateView, FormView
+from django.views.generic import CreateView, FormView, ListView, DetailView, UpdateView, DeleteView
 
-from users.forms import UserRegisterForm, UserResetForm
+from users.forms import UserRegisterForm, UserResetForm, UserForm
 from users.models import User
 from users.services import send_verification_mail
 
@@ -62,3 +63,24 @@ class UserResetView(FormView):
     @staticmethod
     def generate_password():
         return secrets.token_hex(5)
+
+
+class UserListView(ListView):
+    model = User
+
+
+class UserDetailView(DetailView):
+    model = User
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserForm
+
+    def get_success_url(self):
+        return reverse('users:user_detail', kwargs={'pk': self.object.pk})
+
+
+class UserDeleteView(LoginRequiredMixin, DeleteView):
+    model = User
+    success_url = reverse_lazy('users:user_list')

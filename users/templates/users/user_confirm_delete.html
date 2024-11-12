@@ -5,17 +5,14 @@
         <div class="col-6">
             <form class="row" method="post" enctype="multipart/form-data">
                 <div class="card">
+                    <p class="card-text">Действительно хотите удалить {{ object.email }}?</p>
                     <div class="card-body">
                         {% csrf_token %}
-                        {{ form.as_p }}
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        {% if object %}
-                        Сохранить
-                        {% else %}
-                        Зарегистрироваться
-                        {% endif %}
+                        Удалить
                     </button>
+                    <a class="btn btn-primary" href="{% url 'users:user_list'%}" role="button">Отмена</a>
                 </div>
             </form>
         </div>
