@@ -15,7 +15,7 @@
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'users:user_detail' user.pk %}" class="text-white">Личный аккаунт</a></li>
                     <li>
-                    <form target="{% url 'users:logout' %}" class="row" method="post">
+                    <form action="{% url 'users:logout' %}" class="row" method="post">
                         {% csrf_token %}
                         <input type="submit" class="text-white" value="Выход">
                     </form>
