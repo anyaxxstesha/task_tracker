@@ -26,6 +26,11 @@ class Task(models.Model):
         help_text='Загрузите файл для задачи, если это необходимо',
         **NULLABLE
     )
+    views_amount = models.PositiveIntegerField(
+        default=0,
+        verbose_name='Просмотры',
+        help_text='Счетчик просмотров задачи'
+    )
 
     class Meta:
         verbose_name = 'Задача'
