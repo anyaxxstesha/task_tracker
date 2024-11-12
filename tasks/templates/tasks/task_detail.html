@@ -3,14 +3,13 @@
 {% block content %}
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
-
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            <div class="col">
+        <div  class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div style="height: 25rem;" class="col-6">
                 <div class="card shadow-sm">
-                    <div class="card-body">
-                        <p class="card-text"><strong>{{ task.title }} - {{ task.presumable_completion_time }}</strong></p>
-                        <p class="card-text">{{ task.description }}</p>
-                        <img style="height: 20rem;" src="{{ task.image | media_filter }}">
+                    <p class="card-text"><strong>{{ task.title }} - {{ task.presumable_completion_time }}</strong></p>
+                    <div style="height: 20rem;" class="card-body">
+
+                        <div class="card-text">{{ task.description }}</div>
                         <p class="card-text">{{ task.file }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
@@ -21,8 +20,47 @@
                     </div>
                 </div>
             </div>
-        </div>
+            <div  class="col-6">
 
-    </div>
-</div>
-{% endblock %}
+                    {% if task.image %}
+                        <img style="height: 25rem;" src="{{ task.image | media_filter }}">
+                    {% endif %}
+
+            </div>
+                    </div>
+                    <div class="row g-3 mt-3">
+                        {% for form in forms %}
+                        <div class="col-3">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <form method="post" action="{% url 'tasks:status_update' form.instance.pk %}">
+                                        {{ form.instance.type }}
+                                        {% csrf_token %}
+                                        {{ form.as_p }}
+                                        <input type="submit" value="Назначить"/>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% if empty_form %}
+                        <div class="col-3">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <p class="card-text">{{ empty_form_title }}</p>
+                                    <form method="post" action="{% url 'tasks:status_create' task.pk %}">
+                                        {{ empty_form.instance.type }}
+                                        {% csrf_token %}
+                                        {{ empty_form.as_p }}
+                                        <input type="submit" value="Назначить"/>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+
+                    </div>
+                </div>
+            </div>
+            {% endblock %}

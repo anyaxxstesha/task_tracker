@@ -1,6 +1,6 @@
-from django.forms import ModelForm, forms, BooleanField
+from django.forms import ModelForm, forms, BooleanField, IntegerField
 
-from tasks.models import Task
+from tasks.models import Task, Status
 
 
 class StyleFormMixin:
@@ -37,3 +37,9 @@ class TaskForm(StyleFormMixin, ModelForm):
         self.check_restrictions(description, 'description')
 
         return description
+
+
+class StatusForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Status
+        fields = ('person_in_charge',)
