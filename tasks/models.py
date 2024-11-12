@@ -15,13 +15,13 @@ class Task(models.Model):
         **NULLABLE
     )
     image = models.ImageField(
-        upload_to='blog/images',
+        upload_to='tasks/images',
         verbose_name='Изображение',
         help_text='Загрузите изображение для задачи, если это необходимо',
         **NULLABLE
     )
     file = models.FileField(
-        upload_to='blog/files',
+        upload_to='tasks/files',
         verbose_name='Файл',
         help_text='Загрузите файл для задачи, если это необходимо',
         **NULLABLE

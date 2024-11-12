@@ -17,8 +17,8 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(help_text='Укажите название задачи', max_length=100, verbose_name='Название задачи')),
                 ('description', models.TextField(blank=True, help_text='Добавьте текст задачи', null=True, verbose_name='Текст задачи')),
-                ('image', models.ImageField(blank=True, help_text='Загрузите изображение для задачи, если это необходимо', null=True, upload_to='blog/images', verbose_name='Изображение')),
-                ('file', models.FileField(blank=True, help_text='Загрузите файл для задачи, если это необходимо', null=True, upload_to='blog/files', verbose_name='Файл')),
+                ('image', models.ImageField(blank=True, help_text='Загрузите изображение для задачи, если это необходимо', null=True, upload_to='tasks/images', verbose_name='Изображение')),
+                ('file', models.FileField(blank=True, help_text='Загрузите файл для задачи, если это необходимо', null=True, upload_to='tasks/files', verbose_name='Файл')),
             ],
             options={
                 'verbose_name': 'Задача',
