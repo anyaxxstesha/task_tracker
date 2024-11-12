@@ -16,7 +16,7 @@ class StyleFormMixin:
 class TaskForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Task
-        fields = ('title', 'description', 'image', 'file')
+        fields = ('title', 'description', 'image', 'file', 'presumable_completion_time', 'is_public')
 
     @staticmethod
     def check_restrictions(field, field_name):
