@@ -29,7 +29,7 @@ class UserCreateView(CreateView):
         user.save()
         token = secrets.token_hex(16)
         user.token = token
-        host = self.request.get_host()
+        host = settings.MAIN_HOST
         send_verification_mail(host, user.email, token)
         return super().form_valid(form)
 
