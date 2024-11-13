@@ -1,0 +1,50 @@
+services:
+  db:
+    tty: true
+    image: postgres:15
+    restart: on-failure
+
+    env_file:
+      - .env
+    volumes:
+      - task_tracker:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+  django_app:
+    tty: true
+    build: ./
+    restart: on-failure
+    volumes:
+      - ./static:/static/
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition:
+          service_healthy
+
+    command: sh -c "python manage.py migrate && python manage.py collectstatic --no-input && gunicorn -w $(( $(nproc)*2+1 )) -b 0.0.0.0:5000 config.wsgi"
+
+
+  nginx:
+    tty: true
+    build: ./nginx
+    restart: on-failure
+    ports:
+      - 80:80
+    volumes:
+      - ./static:/static/
+    depends_on:
+      - django_app
+
+
+volumes:
+  task_tracker:
+    driver: local
+  static:
+    driver: local
